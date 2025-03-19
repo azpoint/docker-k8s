@@ -1,0 +1,5 @@
+docker run --name mongodb -v data:/data/db --rm -d --network goals-app-net -e MONGO_INITDB_ROOT_USERNAME=dudedude -e MONGO_INITDB_ROOT_PASSWORD=secret mongo:5.0
+
+docker run --name goals-backend --rm -it -p 80:80 --network goals-app-net  -v $(pwd):/app  -v logs:/app/logs -v /app/node_modules goals-node
+
+docker run --name goals-frontend --rm -p 3000:3000 -it -v $(pwd)/src:/app/src goals-react
