@@ -2,6 +2,7 @@ services:
   mongodb:
     image: 'mongo:5.0'
     restart: unless-stopped
+    container_name: mongodb
     volumes:
       - data:/data/db
     # environment:
@@ -18,19 +19,22 @@ services:
       dockerfile: Dockerfile
       # args:
       #   - name=value
+    container_name: goals-backend
     ports:
       - '80:80'
     volumes:
-      - ./backend/logs:/app/logs
+      - logs:/app/logs
       - ./backend:/app
       - /app/node_modules
     env_file:
       - ./backend/backend.env
+    entrypoint: ["/bin/sh", "-c", "chown -R node:node /app/logs && exec node app.js"]
     depends_on:
       - mongodb
   frontend:
     restart: unless-stopped
     build: ./frontend
+    container_name: goals-frontend
     ports:
       - '3000:3000'
     volumes:
