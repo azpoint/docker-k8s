@@ -1,0 +1,28 @@
+# Multi-Stage Build
+
+# 1 - Image to build React App > 2 - Copy the built React App to a new nginx container
+
+FROM node:14-alpine as asrock
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:stable-alpine
+
+# --from=buil(name of the first stage) copy the /app/build path to /usr/share/nginx/html
+# which is a default path to serve webpages in nginx
+
+COPY --from=asrock /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;" ]
+
+# docker build -f frontend/Dockerfile.prod -t clonit/goals-react:v1 ./frontend/
