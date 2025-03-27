@@ -19,4 +19,4 @@ spec:
     spec:
       containers:
         - name: second-nodejs
-          image: clonit/k8s-core:v1
+          image: clonit/k8s-core:v2

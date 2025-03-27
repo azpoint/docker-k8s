@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    group: example
+spec:
+  selector:
+    app: second-app
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+    # - protocol: 'TCP'
+    #   port: 443
+    #   targetPort: 443
+  type: LoadBalancer # ClusterIp (Inside Cluster), NodePorts (Expose the IP of worker node), LoadBalancer (Expose service to internet)
+---
+# --------- Kind (Deployment) setup
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+  labels:
+    group: example
+# -------- Pod Specifications
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+      tier: backend
+    # matchExpressions:
+    #   - {key: app, operator: In , values: [second-app, first-app]}
+# -------- Pod template
+  template:
+    metadata:
+      labels:
+        app: second-app # key:vlaue pair totally custom
+        tier: backend #key:value pair totally custom
+    spec:
+      containers:
+        - name: second-nodejs
+          image: clonit/k8s-core:v1
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8080
+          #     # httpHeaders:
+          #   periodSeconds: 5
+          #   initialDelaySeconds: 5
