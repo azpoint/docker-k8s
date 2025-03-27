@@ -1,0 +1,22 @@
+# --------- Kind (Deployment) setup
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+# -------- Pod Specifications
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+      tier: backend
+# -------- Pod template
+  template:
+    metadata:
+      labels:
+        app: second-app # key:vlaue pair totally custom
+        tier: backend #key:value pair totally custom
+    spec:
+      containers:
+        - name: second-nodejs
+          image: clonit/k8s-core:v1
