@@ -17,6 +17,5 @@ spec:
           image: clonit/k8s-users-api:v1
           env:
             - name: AUTH_URL
-              value: localhost
-        - name: auth
-          image: clonit/k8s-auth-api:v1
+              # value: localhost | Using env to connect to service
+              value: 'auth-service.default' # Using default namespace kubectl get namespaces
