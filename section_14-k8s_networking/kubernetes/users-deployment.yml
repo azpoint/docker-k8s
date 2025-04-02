@@ -15,5 +15,8 @@ spec:
       containers:
         - name: users
           image: clonit/k8s-users-api:v1
+          env:
+            - name: AUTH_URL
+              value: localhost
         - name: auth
           image: clonit/k8s-auth-api:v1
