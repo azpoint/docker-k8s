@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+spec:
+  selector:
+    app: users
+  type: LoadBalancer #NodePort (can be acess from outside the cluster with the node ip address, which is combersome) | ClusterIP(Node to be access only from inside the cluster)
+  ports:
+    - protocol: TCP
+      port: 8080 #outside port
+      targetPort: 8080 # port in the pod/container
