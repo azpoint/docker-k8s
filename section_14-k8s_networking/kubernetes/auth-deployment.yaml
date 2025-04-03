@@ -4,7 +4,7 @@ metadata:
   name: auth-deployment
 spec:
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: auth
   template:
@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: auth
-          image: clonit/k8s-auth-api:v1
+          image: clonit/kub-demo-auth:latest

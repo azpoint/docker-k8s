@@ -4,7 +4,7 @@ metadata:
   name: users-deployment
 spec:
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: users
   template:
@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: users
-          image: clonit/k8s-users-api:v1
+          image: clonit/kub-demo-users:latest
           env:
-            - name: AUTH_URL
-              # value: localhost | Using env to connect to service
-              value: 'auth-service.default' # Using default namespace kubectl get namespaces
+            - name: AUTH_ADDRESS
+              # value: "10.99.104.252"
+              value: "auth-service.default"
